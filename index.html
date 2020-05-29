@@ -30,11 +30,12 @@
 <body>
     <div class=""><button onclick="javascript:window.admiral('show','transact.login');">Subscribe</button></div>
     <div class=""><button onclick="javascript:window.admiral('show','transact.manage');">Manage Account</button></div>
-    <div class="text-center" id="status">No Subscription Found
+    <div class="text-center" id="status">
     </div>
     <script>
         function setCookie() {
             window.admiral('after','measure.detected',function(e) {
+                var g = document.querySelector('#status');
                 var d = new Date();
                 d.setTime(d.getTime() + (7*24*60*60*1000));
                 var n = d.toUTCString();
@@ -43,6 +44,7 @@
                     document.cookie = "_tbn=1; expires=" + n + "; path=/";
                     return;
                 }
+                g.textContent = "No Active Subscription";
                 document.cookie = "_tbn=0; expires=" + n + "; path=/";
                 window.sessionStorage.setItem('cfS', '0');
             })

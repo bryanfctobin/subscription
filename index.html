@@ -30,7 +30,7 @@
 <body>
     <div class=""><button onclick="javascript:window.admiral('show','transact.login');">Subscribe</button></div>
     <div class=""><button onclick="javascript:window.admiral('show','transact.manage');">Manage Account</button></div>
-    <div class="text-center" id="status">
+    <div class="text-center" id="status">No Subscription Found
     </div>
     <script>
         function setCookie() {
@@ -74,7 +74,7 @@
                 return;
             }
             window.sessionStorage.setItem('cfS', '1');
-            location.href = "https://admiralarmada.com/cookie";
+            location.reload();
         })
     </script>
 </body>

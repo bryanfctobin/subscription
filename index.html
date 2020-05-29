@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta description="Saving the internet, one publisher at a time.">
+    <title>Admiral Testing Page</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">!(function(o,n,t){t=o.createElement(n),o=o.getElementsByTagName(n)[0],t.async=1,t.src="https://suddensoda.com/v2hguzJ1Tb73qw4v276K6w6fa_TWV1R7GgMRcXn_tfH3oCONgC_cufq-_iSo9PwBR3cXzUg0j6HpXGzHVJmJ9uQ",o.parentNode.insertBefore(t,o)})(document,"script"),(function(o,n){o[n]=o[n]||function(){(o[n].q=o[n].q||[]).push(arguments)}})(window,"admiral");!(function(c,e,o,t,n){function r(o,t){(function n(){try{return 0<(localStorage.getItem("v4ac1eiZr0")||"").split(",")[4]}catch(o){}return!1})()&&(t=c[e].pubads())&&t.setTargeting("admiral-engaged","true")}(n=c[e]=c[e]||{}).cmd=n.cmd||[],typeof n.pubads===o?r():typeof n.cmd.unshift===o?n.cmd.unshift(r):n.cmd.push(r)})(window,"googletag","function");</script>
+    <style>
+        body {
+            background-color:#008080;
+        }
+        div {
+            margin-top:5%;
+            font-size:5rem;
+        }
+        .text-center {
+            color:#ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class=""><button onclick="javascript:window.admiral('show','transact.login');">Subscribe</button></div>
+    <div class=""><button onclick="javascript:window.admiral('show','transact.manage');">Manage Account</button></div>
+    <div class="text-center" id="status">
+    </div>
+    <script>
+        function setCookie() {
+            window.admiral('after','measure.detected',function(e) {
+                var d = new Date();
+                d.setTime(d.getTime() + (7*24*60*60*1000));
+                var n = d.toUTCString();
+                console.log(e);
+                if (e.subscribed) {
+                    document.cookie = "_tbn=1; expires=" + n + "; path=/";
+                    return;
+                }
+                document.cookie = "_tbn=0; expires=" + n + "; path=/";
+                window.sessionStorage.setItem('cfS', '0');
+            })
+        }
+        window.onload = setCookie();
+    </script>
+    <script>
+        function readCookie(c) {
+            var a = document.cookie.split(';');
+            var g = document.querySelector('#status');
+            for (var i = 0; i < a.length; i++) {
+                var b = a[i].split('=');
+                var d = b[0].trim();
+                if (c === d) {
+                    var e = b[1].trim();
+                    if (e === "1") {
+                        g.textContent = "Subscribed Visitor";
+                    } else {
+                        g.textContent = "No Active Subscription";
+                    }
+                }
+            }
+            return true;
+        }
+        window.onload = readCookie('_tbn');
+        window.admiral('after', 'transact.subscribed', function() {
+            var x = window.sessionStorage.getItem('cfS');
+            if (x === "1") {
+                return;
+            }
+            window.sessionStorage.setItem('cfS', '1');
+            location.href = "https://admiralarmada.com/cookie";
+        })
+    </script>
+</body>
+</html>
+

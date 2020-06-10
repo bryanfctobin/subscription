@@ -1,0 +1,25 @@
+body {
+    /* background-color:#008080; */
+    background-color:#009090;
+}
+.text-center {
+    color:#ffffff;
+}
+#mainContent {
+    margin: 10% auto;
+    text-align: center;
+    font-size:5rem;
+}
+#mainContent div {
+    margin: 5%;
+}
+#mainContent div button {
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 5px 10px;
+}
+#mainContent div button:hover {
+    background-color:black;
+    color:white;
+    transition: ease 1s;
+}

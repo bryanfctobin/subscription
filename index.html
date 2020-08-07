@@ -49,12 +49,28 @@
                 var n = d.toUTCString();
                 if (e.subscribed) {
                     document.cookie = "_tbn=1; expires=" + n + "; path=/";
+                    removeSmyrna();
                     return;
                 }
+                loadSmyrna();
                 g.textContent = "No Active Subscription";
                 document.cookie = "_tbn=0; expires=" + n + "; path=/";
                 window.sessionStorage.setItem('cfS', '0');
             })
+        }
+        function loadSmyrna() {
+            var smyrna = document.querySelector('#smyrna');
+            var penny = document.createElement('img');
+            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                penny.src="https://admiralarmada.com/cookie/content/smyrna-sm.png";
+            } else {
+                penny.src = "https://admiralarmada.com/cookie/content/smyrna.png";
+            }
+            smyrna.appendChild(penny);
+        }
+        function removeSmyrna() {
+            var smyrna = document.querySelector('#smyrna');
+            smyrna.style.display = 'none';
         }
         window.onload = setCookie();
     </script>
@@ -62,7 +78,6 @@
         function readCookie(c) {
             var a = document.cookie.split(';');
             var g = document.querySelector('#status');
-            var smyrna = document.querySelector('#smyrna');
             for (var i = 0; i < a.length; i++) {
                 var b = a[i].split('=');
                 var d = b[0].trim();
@@ -72,9 +87,6 @@
                         g.textContent = "Subscribed Visitor";
                     } else {
                         g.textContent = "No Active Subscription";
-                        var penny = document.createElement('img');
-                        penny.src = "https://admiralarmada.com/cookie/content/smyrna.png";
-                        smyrna.appendChild(penny);
                     }
                 }
             }

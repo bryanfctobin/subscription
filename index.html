@@ -31,8 +31,8 @@
             </ul>
         </nav>
         <div id="smyrna"></div>
-        <div class=""><button onclick="javascript:window.admiral('show','transact.login');">Subscribe</button></div>
-        <div class=""><button onclick="javascript:window.admiral('show','transact.manage');">Manage Account</button></div>
+        <div class="" id="subscribeBtn"><button onclick="javascript:window.admiral('show','transact.login');">Subscribe</button></div>
+        <div class="" id="manageBtn"><button onclick="javascript:window.admiral('show','transact.manage');">Manage Account</button></div>
         <br>
     </header>
     <main>
@@ -44,15 +44,19 @@
         function setCookie() {
             window.admiral('after','measure.detected',function(e) {
                 var g = document.querySelector('#status');
+                var bb = document.querySelector('#subscribeBtn');
+                var cc = document.querySelector('#manageBtn');
                 var d = new Date();
                 d.setTime(d.getTime() + (7*24*60*60*1000));
                 var n = d.toUTCString();
                 if (e.subscribed) {
                     document.cookie = "_tbn=1; expires=" + n + "; path=/";
+                    cc.style.display = 'inline-block';
                     removeSmyrna();
                     return;
                 }
                 loadSmyrna();
+                bb.style.display = 'inline-block';
                 g.textContent = "No Active Subscription";
                 document.cookie = "_tbn=0; expires=" + n + "; path=/";
                 window.sessionStorage.setItem('cfS', '0');
@@ -78,6 +82,7 @@
         function readCookie(c) {
             var a = document.cookie.split(';');
             var g = document.querySelector('#status');
+            var bb = document.querySelector('#subscribeBtn');
             for (var i = 0; i < a.length; i++) {
                 var b = a[i].split('=');
                 var d = b[0].trim();

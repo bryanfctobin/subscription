@@ -25,3 +25,6 @@
 #smyrna {
     margin-bottom: 15px;
 }
+#subscribeBtn, #manageBtn {
+    display: none;
+}

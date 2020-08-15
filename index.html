@@ -40,71 +40,67 @@
         </h1>
     </main>
     <script>
-        function setCookie() {
-            window.admiral('after','measure.detected',function(e) {
-                var g = document.querySelector('#status');
-                var bb = document.querySelector('#loginBtn');
-                var d = new Date();
-                d.setTime(d.getTime() + (7*24*60*60*1000));
-                var n = d.toUTCString();
-                if (e.subscribed) {
-                    document.cookie = "_tbn=1; expires=" + n + "; path=/";
-                    bb.textContent = "Manage Account";
-                    bb.onclick = () => window.admiral('show','transact.manage');
-                    removeSmyrna();
+        var timber = {};
+        timber.status = document.querySelector('#status');
+        timber.loginBtn = document.querySelector('#loginBtn');
+        timber.date = new Date();
+        timber.date.setTime(timber.date.getTime() + (7*24*60*60*1000));
+        timber.utcString = timber.date.toUTCString();
+        timber.smyrna = document.querySelector('#smyrna');
+        timber.penny = document.createElement('img');
+        timber.readCookie = function readCookie(c) {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var keyvalues = cookies[i].split('=');
+                var key = keyvalues[0].trim();
+                if (c === key) {
+                    var value = keyvalues[1].trim();
+                    if (value === "1") {
+                        timber.status.textContent = "Subscribed Visitor";
+                        timber.loginBtn.textContent = "Manage Account";
+                        timber.loginBtn.onclick = () => window.admiral('show','transact.manage');
+                        timber.removeSmyrna();
+                        return;
+                    }
                     return;
                 }
-                loadSmyrna();
-                bb.textContent = "Subscribe";
-                bb.onclick = () => window.admiral('show','transact.login');
-                g.textContent = "No Active Subscription";
-                document.cookie = "_tbn=0; expires=" + n + "; path=/";
-                window.sessionStorage.setItem('cfS', '0');
+            }
+        }
+        timber.setCookie = function setCookie() {
+            window.admiral('after','measure.detected',function(e){
+                if (e.subscribed) {
+                    document.cookie = "_tbn=1; expires=" + timber.utcString + "; path=/";
+                    return;
+                }
+                timber.loadSmyrna();
+                timber.loginBtn.textContent = "Subscribe";
+                timber.loginBtn.onclick = () => window.admiral('show','transact.login');
+                timber.status.textContent = "No Active Subscription";
+                document.cookie = "_tbn=0; expires=" + timber.utcString + "; path=/";
+                window.sessionStorage.setItem('cfs', '0');
             })
         }
-        function loadSmyrna() {
-            var smyrna = document.querySelector('#smyrna');
-            var penny = document.createElement('img');
+        timber.loadSmyrna = function loadSmyrna() {
             if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-                penny.src="https://admiralarmada.com/cookie/content/smyrna-sm.png";
+                timber.penny.src="https://admiralarmada.com/cookie/content/smyrna-sm.png";
             } else {
-                penny.src = "https://admiralarmada.com/cookie/content/smyrna.png";
+                timber.penny.src = "https://admiralarmada.com/cookie/content/smyrna.png";
             }
-            smyrna.appendChild(penny);
+            timber.smyrna.appendChild(timber.penny);
         }
-        function removeSmyrna() {
-            var smyrna = document.querySelector('#smyrna');
-            smyrna.style.display = 'none';
+        timber.removeSmyrna = function removeSmyrna() {
+            timber.smyrna.style.display = 'none';
         }
-        window.onload = setCookie();
-    </script>
-    <script>
-        function readCookie(c) {
-            var a = document.cookie.split(';');
-            var g = document.querySelector('#status');
-            for (var i = 0; i < a.length; i++) {
-                var b = a[i].split('=');
-                var d = b[0].trim();
-                if (c === d) {
-                    var e = b[1].trim();
-                    if (e === "1") {
-                        g.textContent = "Subscribed Visitor";
-                    } else {
-                        g.textContent = "No Active Subscription";
-                    }
-                }
-            }
-            return true;
-        }
-        window.onload = readCookie('_tbn');
-        window.admiral('after', 'transact.subscribed', function() {
-            var x = window.sessionStorage.getItem('cfS');
-            if (x === "1") {
+        window.admiral('after','transact.subscribed', function() {
+            var transactCount = window.sessionStorage.getItem('cfs');
+            if (transactCount === "1") {
                 return;
             }
-            window.sessionStorage.setItem('cfS', '1');
+            window.sessionStorage.setItem('cfs','1');
             location.reload();
         })
+        window.onload = timber.readCookie('_tbn');
+        window.onload = timber.setCookie();
     </script>
 </body>
 </html>

@@ -61,6 +61,12 @@
                         timber.loginBtn.onclick = () => window.admiral('show','transact.manage');
                         timber.removeSmyrna();
                         return;
+                    } else {
+                        timber.loadSmyrna();
+                        timber.loginBtn.textContent = "Subscribe";
+                        timber.loginBtn.onclick = () => window.admiral('show','transact.login');
+                        timber.status.textContent = "No Active Subscription";
+                        return;
                     }
                     return;
                 }
@@ -72,10 +78,6 @@
                     document.cookie = "_tbn=1; expires=" + timber.utcString + "; path=/";
                     return;
                 }
-                timber.loadSmyrna();
-                timber.loginBtn.textContent = "Subscribe";
-                timber.loginBtn.onclick = () => window.admiral('show','transact.login');
-                timber.status.textContent = "No Active Subscription";
                 document.cookie = "_tbn=0; expires=" + timber.utcString + "; path=/";
                 window.sessionStorage.setItem('cfs', '0');
             })

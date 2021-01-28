@@ -1,4 +1,3 @@
-<!-- MVP.css quickstart template: https://github.com/andybrewer/mvp/ -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,8 +113,10 @@
             if (x.value) {
                 console.log("The visitor has logged in");
                 return;
-            } 
+            }
+            window.sessionStorage.setItem('activeSubSession','0')
             console.log("The visitor has logged out");
+            location.reload();
         }
     </script>
 </body>

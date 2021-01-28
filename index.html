@@ -61,13 +61,12 @@
                         timber.loginBtn.onclick = () => window.admiral('show','transact.manage');
                         timber.removeSmyrna();
                         return;
-                    } else {
-                        timber.loadSmyrna();
-                        timber.loginBtn.textContent = "Subscribe";
-                        timber.loginBtn.onclick = () => window.admiral('show','transact.login');
-                        timber.status.textContent = "No Active Subscription";
                     }
                 }
+                timber.loadSmyrna();
+                timber.loginBtn.textContent = "Subscribe";
+                timber.loginBtn.onclick = () => window.admiral('show','transact.login');
+                timber.status.textContent = "No Active Subscription";
             }
         }
         timber.setCookie = function setCookie() {

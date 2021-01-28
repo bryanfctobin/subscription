@@ -76,6 +76,7 @@
                     console.log("Subscribed User");
                     return;
                 }
+                //I need to revist and add a session check or something similar here, so that when a visitor logs out we know their active sub session has expired and we change the UI elements / button event. Right now after logging out, it takes another pageview before subscription privileges are revoked
                 console.log("Non Subscribed User");
                 document.cookie = "_tbn=0; expires=" + timber.utcString + "; path=/";
                 window.sessionStorage.setItem('activeSubSession', '0');
@@ -116,7 +117,6 @@
             }
             window.sessionStorage.setItem('activeSubSession','0')
             console.log("The visitor has logged out");
-            location.reload();
         }
     </script>
 </body>

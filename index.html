@@ -23,10 +23,10 @@
 <body>
     <header>
         <nav>
-            <a href="/"><img src="https://admiralarmada.com/content/adm.svg?text=logo" height="70"></a>
+            <a href="https://get"><img src="https://admiralarmada.com/content/adm.svg?text=logo" height="70"></a>
             <ul>
-                <li><a href="https://getadmiral.com/?ref=subTest">Admiral</a></li>
-                <li><a href="mailto:bryan@getadmiral.com?Subject=Sub&20Test">Contact</a>
+                <li><a href="#" id="textLoginBtn">Login</a></li>
+                <li><a href="mailto:bryan@getadmiral.com?Subject=Subscription%20Test">Contact</a>
             </ul>
         </nav>
         <div id="smyrna"></div>
@@ -42,6 +42,7 @@
         var timber = {};
         timber.status = document.querySelector('#status');
         timber.loginBtn = document.querySelector('#loginBtn');
+        timber.textLoginBtn = document.querySelector('#textLoginBtn');
         timber.date = new Date();
         timber.date.setTime(timber.date.getTime() + (7*24*60*60*1000));
         timber.utcString = timber.date.toUTCString();
@@ -66,13 +67,14 @@
         }
         timber.setNonSubscriberVersionSite = function setNonSubscriberVersionSite(x) {
             timber.loginBtn.textContent = "Subscribe";
-            timber.loginBtn.onclick = () => window.admiral('show','transact.login');
+            timber.loginBtn.onclick = () => window.admiral('show','transact.subscribe');
             timber.status.textContent = "No Active Subscription";
         }
         timber.setSubscriberVersionSite = function setSubscriberVersionSite(x) {
             x.status.textContent = "Subscribed Visitor";
             x.loginBtn.textContent = "Manage Account";
             x.loginBtn.onclick = () => { window.admiral('show','transact.manage')};
+            x.textLoginBtn.style.display = 'none';
         }
         timber.setCookie = function setCookie() {
             window.admiral('after','measure.detected',function(e){
@@ -101,6 +103,7 @@
         timber.checkForLoggedIn = function checkForLoggedIn(status) {
             if (status.value) {
                 console.log("The visitor has logged in");
+                timber.textLoginBtn.style.display = 'none';
                 return;
             }
             window.sessionStorage.setItem('activeSubSession','0');
@@ -108,6 +111,9 @@
             document.cookie = "_tbn=0; expires=" + timber.utcString + "; path=/";
             parent.location.reload();
         }
+        timber.textLoginBtn.addEventListener('click',()=>{
+            window.admiral('show','transact.login');
+        })
         window.admiral('after','transact.subscribed', function() {
             var activeSubSession = window.sessionStorage.getItem('activeSubSession');
             document.cookie = "_tbn=1; expires=" + timber.utcString + "; path=/";
@@ -122,8 +128,6 @@
         window.onload = timber.setCookie();
         //https://admrl.slack.com/archives/DG5CGLLGH/p1611685727001800
         window.admiral('after','transact.loggedIn',timber.checkForLoggedIn);
-        window.admiral('after','transact.loggedIn',function(status){console.log(status)});
-
     </script>
 </body>
 </html>

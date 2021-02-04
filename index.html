@@ -98,8 +98,19 @@
         timber.removeSmyrna = function removeSmyrna() {
             timber.smyrna.style.display = 'none';
         }
+        timber.checkForLoggedIn = function checkForLoggedIn(status) {
+            if (status.value) {
+                console.log("The visitor has logged in");
+                return;
+            }
+            window.sessionStorage.setItem('activeSubSession','0');
+            console.log("The visitor has logged out");
+            document.cookie = "_tbn=0; expires=" + timber.utcString + "; path=/";
+            parent.location.reload();
+        }
         window.admiral('after','transact.subscribed', function() {
             var activeSubSession = window.sessionStorage.getItem('activeSubSession');
+            document.cookie = "_tbn=1; expires=" + timber.utcString + "; path=/";
             timber.setSubscriberVersionSite(timber);
             timber.removeSmyrna();
             console.log("Transact susbcribed fired")
@@ -110,17 +121,9 @@
         window.onload = timber.readCookie('_tbn');
         window.onload = timber.setCookie();
         //https://admrl.slack.com/archives/DG5CGLLGH/p1611685727001800
-        window.admiral('after','transact.loggedIn',checkForLoggedIn);
-        function checkForLoggedIn(x) {
-            if (x.value) {
-                console.log("The visitor has logged in");
-                return;
-            }
-            window.sessionStorage.setItem('activeSubSession','0');
-            console.log("The visitor has logged out");
-            document.cookie = "_tbn=0; expires=" + timber.utcString + "; path=/";
-            parent.location.reload();
-        }
+        window.admiral('after','transact.loggedIn',timber.checkForLoggedIn);
+        window.admiral('after','transact.loggedIn',function(status){console.log(status)});
+
     </script>
 </body>
 </html>

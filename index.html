@@ -74,11 +74,6 @@
             x.loginBtn.textContent = "Manage Account";
             x.loginBtn.onclick = () => { window.admiral('show','transact.manage')};
         }
-        timber.manageSubscriptionFeatures = function manageSubscriptionFeatures() {
-            timber.status.textContent = "Subscribed Visitor";
-            timber.loginBtn.textContent = "Manage Account";
-            timber.loginBtn.onclick = () => window.admiral('show','transact.manage');
-        }
         timber.setCookie = function setCookie() {
             window.admiral('after','measure.detected',function(e){
                 if (e.subscribed) {
@@ -105,7 +100,7 @@
         }
         window.admiral('after','transact.subscribed', function() {
             var activeSubSession = window.sessionStorage.getItem('activeSubSession');
-            timber.manageSubscriptionFeatures();
+            timber.setSubscriberVersionSite(timber);
             timber.removeSmyrna();
             console.log("Transact susbcribed fired")
             if (activeSubSession === "1") {

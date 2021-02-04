@@ -55,18 +55,29 @@
                 if (c === key) {
                     var value = keyvalues[1].trim();
                     if (value === "1") {
-                        timber.status.textContent = "Subscribed Visitor";
-                        timber.loginBtn.textContent = "Manage Account";
-                        timber.loginBtn.onclick = () => window.admiral('show','transact.manage');
+                        timber.setSubscriberVersionSite(timber);
                         timber.removeSmyrna();
                         return;
                     }
                 }
                 timber.loadSmyrna();
-                timber.loginBtn.textContent = "Subscribe";
-                timber.loginBtn.onclick = () => window.admiral('show','transact.login');
-                timber.status.textContent = "No Active Subscription";
+                timber.setNonSubscriberVersionSite(timber);
             }
+        }
+        timber.setNonSubscriberVersionSite = function setNonSubscriberVersionSite(x) {
+            timber.loginBtn.textContent = "Subscribe";
+            timber.loginBtn.onclick = () => window.admiral('show','transact.login');
+            timber.status.textContent = "No Active Subscription";
+        }
+        timber.setSubscriberVersionSite = function setSubscriberVersionSite(x) {
+            x.status.textContent = "Subscribed Visitor";
+            x.loginBtn.textContent = "Manage Account";
+            x.loginBtn.onclick = () => { window.admiral('show','transact.manage')};
+        }
+        timber.manageSubscriptionFeatures = function manageSubscriptionFeatures() {
+            timber.status.textContent = "Subscribed Visitor";
+            timber.loginBtn.textContent = "Manage Account";
+            timber.loginBtn.onclick = () => window.admiral('show','transact.manage');
         }
         timber.setCookie = function setCookie() {
             window.admiral('after','measure.detected',function(e){
@@ -76,7 +87,6 @@
                     console.log("Subscribed User");
                     return;
                 }
-                //I need to revist and add a session check or something similar here, so that when a visitor logs out we know their active sub session has expired and we change the UI elements / button event. Right now after logging out, it takes another pageview before subscription privileges are revoked
                 console.log("Non Subscribed User");
                 document.cookie = "_tbn=0; expires=" + timber.utcString + "; path=/";
                 window.sessionStorage.setItem('activeSubSession', '0');
@@ -95,9 +105,7 @@
         }
         window.admiral('after','transact.subscribed', function() {
             var activeSubSession = window.sessionStorage.getItem('activeSubSession');
-            timber.status.textContent = "Subscribed Visitor";
-            timber.loginBtn.textContent = "Manage Account";
-            timber.loginBtn.onclick = () => window.admiral('show','transact.manage');
+            timber.manageSubscriptionFeatures();
             timber.removeSmyrna();
             console.log("Transact susbcribed fired")
             if (activeSubSession === "1") {
@@ -106,8 +114,6 @@
         })
         window.onload = timber.readCookie('_tbn');
         window.onload = timber.setCookie();
-    </script>
-    <script>
         //https://admrl.slack.com/archives/DG5CGLLGH/p1611685727001800
         window.admiral('after','transact.loggedIn',checkForLoggedIn);
         function checkForLoggedIn(x) {
@@ -115,8 +121,10 @@
                 console.log("The visitor has logged in");
                 return;
             }
-            window.sessionStorage.setItem('activeSubSession','0')
+            window.sessionStorage.setItem('activeSubSession','0');
             console.log("The visitor has logged out");
+            document.cookie = "_tbn=0; expires=" + timber.utcString + "; path=/";
+            parent.location.reload();
         }
     </script>
 </body>

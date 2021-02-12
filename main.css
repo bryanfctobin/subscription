@@ -3,4 +3,5 @@
 }
 #notificationsBtn {
   cursor: pointer;
+  display: none;
 }

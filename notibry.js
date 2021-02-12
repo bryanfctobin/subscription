@@ -1,4 +1,5 @@
 //Ref: https://developer.mozilla.org/en-US/docs/Web/API/notification
+//Ref: https://javascript.info/onload-ondomcontentloaded
 document.addEventListener("DOMContentLoaded", setupNotifications);
 function setupNotifications() {
   let nbtn = document.querySelector("#notificationsBtn");

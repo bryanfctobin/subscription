@@ -1,27 +1,6 @@
-/* body {
-    background-color:#008888;
-}
-.text-center {
-    color:#ffffff;
-}
-#mainContent {
-    margin: 10% auto;
-    text-align: center;
-    font-size:5rem;
-}
-#mainContent div {
-    margin: 5%;
-}
-#mainContent div button {
-    border: 1px solid black;
-    border-radius: 15px;
-    padding: 5px 10px;
-}
-#mainContent div button:hover {
-    background-color:black;
-    color:white;
-    transition: ease 1s;
-} */
 #smyrna {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
+}
+#notificationsBtn {
+  cursor: pointer;
 }

@@ -120,7 +120,9 @@
         //https://admrl.slack.com/archives/DG5CGLLGH/p1611685727001800
         window.admiral('after','transact.loggedIn',timber.checkForLoggedIn);
         window.admiral('after','transact.loggedOut',timber.checkForLoggedOut);
+        window.admiral('after','transact.subscribed',function() {
+            document.cookie = "_tbn=1; expires=" + timber.utcString + "; path=/";
+        })
     </script>
 </body>
 </html>
-

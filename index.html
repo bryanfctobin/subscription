@@ -91,6 +91,7 @@
                 }
                 console.log("Non Subscribed User");
                 document.cookie = "_tbn=0; expires=" + timber.utcString + "; path=/";
+                document.cookie = "_pas=1; expires=" + timber.utcString + "; path=/";
                 window.sessionStorage.setItem('activeSubSession', '0');
             })
         }
@@ -125,6 +126,7 @@
         window.admiral('after','transact.loggedOut',timber.checkForLoggedOut);
         window.admiral('after','transact.subscribed',function() {
             document.cookie = "_tbn=1; expires=" + timber.utcString + "; path=/";
+            document.cookie = "_pas=1; expires=" + timber.utcString + "; path=/";
         })
     </script>
 </body>

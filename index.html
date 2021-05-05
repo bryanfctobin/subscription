@@ -56,16 +56,19 @@
                 var keyvalues = cookies[i].split('=');
                 var key = keyvalues[0].trim();
                 if (c === key) {
-                    var value = keyvalues[1].trim();
-                    if (value === "1") {
-                        timber.setSubscriberVersionSite(timber);
-                        timber.removeSmyrna();
-                        return;
-                    }
+                    value = keyvalues[1].trim();
+                    return value;
                 }
-                timber.loadSmyrna();
-                timber.setNonSubscriberVersionSite(timber);
             }
+        }
+        timber.checkSubscriberCookie = function checkSubscriberCookie(c) {
+            if (timber.readCookie(c) === "1") {
+                timber.setSubscriberVersionSite(timber);
+                timber.removeSmyrna();
+                return;
+            }   
+            timber.loadSmyrna();
+            timber.setNonSubscriberVersionSite(timber);
         }
         timber.setNonSubscriberVersionSite = function setNonSubscriberVersionSite(x) {
             timber.loginBtn.textContent = "Subscribe";
@@ -115,7 +118,7 @@
         timber.textLoginBtn.addEventListener('click',()=>{
             window.admiral('show','transact.login');
         })
-        window.onload = timber.readCookie('_tbn');
+        window.onload = timber.checkSubscriberCookie('_tbn');
         window.onload = timber.setCookie();
         //https://admrl.slack.com/archives/DG5CGLLGH/p1611685727001800
         window.admiral('after','transact.loggedIn',timber.checkForLoggedIn);

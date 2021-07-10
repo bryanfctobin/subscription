@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta description="Saving the internet, one publisher at a time.">
-    <link rel="shortcut icon" type="image/png" href="https://bryantobin.com/content/bryan-face-fav.png"/>
+    <link rel="shortcut icon" type="image/png" href="https://bryantobin.com/content/bryan-face-fav.png" />
     <title>Subscription Testing</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
@@ -18,13 +19,16 @@
     <link rel="stylesheet" href="https://unpkg.com/mvp.css">
     <!-- Local Stylesheet -->
     <link rel="stylesheet" href="main.css">
-    <script type="text/javascript">!(function(o,n,t){t=o.createElement(n),o=o.getElementsByTagName(n)[0],t.async=1,t.src="https://suddensoda.com/v2hguzJ1Tb73qw4v276K6w6fa_TWV1R7GgMRcXn_tfH3oCONgC_cufq-_iSo9PwBR3cXzUg0j6HpXGzHVJmJ9uQ",o.parentNode.insertBefore(t,o)})(document,"script"),(function(o,n){o[n]=o[n]||function(){(o[n].q=o[n].q||[]).push(arguments)}})(window,"admiral");!(function(c,e,o,t,n){function r(o,t){(function n(){try{return 0<(localStorage.getItem("v4ac1eiZr0")||"").split(",")[4]}catch(o){}return!1})()&&(t=c[e].pubads())&&t.setTargeting("admiral-engaged","true")}(n=c[e]=c[e]||{}).cmd=n.cmd||[],typeof n.pubads===o?r():typeof n.cmd.unshift===o?n.cmd.unshift(r):n.cmd.push(r)})(window,"googletag","function");</script>
+    <script
+        type="text/javascript">!(function (o, n, t) { t = o.createElement(n), o = o.getElementsByTagName(n)[0], t.async = 1, t.src = "https://suddensoda.com/v2hguzJ1Tb73qw4v276K6w6fa_TWV1R7GgMRcXn_tfH3oCONgC_cufq-_iSo9PwBR3cXzUg0j6HpXGzHVJmJ9uQ", o.parentNode.insertBefore(t, o) })(document, "script"), (function (o, n) { o[n] = o[n] || function () { (o[n].q = o[n].q || []).push(arguments) } })(window, "admiral"); !(function (c, e, o, t, n) { function r(o, t) { (function n() { try { return 0 < (localStorage.getItem("v4ac1eiZr0") || "").split(",")[4] } catch (o) { } return !1 })() && (t = c[e].pubads()) && t.setTargeting("admiral-engaged", "true") } (n = c[e] = c[e] || {}).cmd = n.cmd || [], typeof n.pubads === o ? r() : typeof n.cmd.unshift === o ? n.cmd.unshift(r) : n.cmd.push(r) })(window, "googletag", "function");</script>
     <script src="notibry.js"></script>
 </head>
+
 <body>
     <header>
         <nav>
-            <a href="https://getadmiral.com"><img src="https://admiralarmada.com/content/adm.svg?text=logo" height="70"></a>
+            <a href="https://getadmiral.com"><img src="https://admiralarmada.com/content/adm.svg?text=logo"
+                    height="70"></a>
             <ul>
                 <li><a href="#" id="textLoginBtn">Login</a></li>
                 <li><a href="mailto:bryan@getadmiral.com?Subject=Subscription%20Test">Contact</a></li>
@@ -46,7 +50,7 @@
         timber.loginBtn = document.querySelector('#loginBtn');
         timber.textLoginBtn = document.querySelector('#textLoginBtn');
         timber.date = new Date();
-        timber.date.setTime(timber.date.getTime() + (7*24*60*60*1000));
+        timber.date.setTime(timber.date.getTime() + (7 * 24 * 60 * 60 * 1000));
         timber.utcString = timber.date.toUTCString();
         timber.smyrna = document.querySelector('#smyrna');
         timber.penny = document.createElement('img');
@@ -66,23 +70,23 @@
                 timber.setSubscriberVersionSite(timber);
                 timber.removeSmyrna();
                 return;
-            }   
+            }
             timber.loadSmyrna();
             timber.setNonSubscriberVersionSite(timber);
         }
         timber.setNonSubscriberVersionSite = function setNonSubscriberVersionSite(x) {
             timber.loginBtn.textContent = "Subscribe";
-            timber.loginBtn.onclick = () => window.admiral('show','transact.subscribe');
+            timber.loginBtn.onclick = () => window.admiral('show', 'transact.subscribe');
             timber.status.textContent = "No Active Subscription";
         }
         timber.setSubscriberVersionSite = function setSubscriberVersionSite(x) {
             x.status.textContent = "Subscribed Visitor";
             x.loginBtn.textContent = "Manage Account";
-            x.loginBtn.onclick = () => { window.admiral('show','transact.manage')};
+            x.loginBtn.onclick = () => { window.admiral('show', 'transact.manage') };
             x.textLoginBtn.style.display = 'none';
         }
         timber.setCookie = function setCookie() {
-            window.admiral('after','measure.detected',function(e){
+            window.admiral('after', 'measure.detected', function (e) {
                 if (e.subscribed) {
                     document.cookie = "_tbn=1; expires=" + timber.utcString + "; path=/";
                     window.sessionStorage.setItem('activeSubSession', '1');
@@ -92,12 +96,13 @@
                 console.log("Non Subscribed User");
                 document.cookie = "_tbn=0; expires=" + timber.utcString + "; path=/";
                 document.cookie = "_pas=1; expires=" + timber.utcString + "; path=/";
+                document.cookie = "_plan=none; expires=" + timber.utcString + "; path=/";
                 window.sessionStorage.setItem('activeSubSession', '0');
             })
         }
         timber.loadSmyrna = function loadSmyrna() {
-            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-                timber.penny.src="https://admiralarmada.com/cookie/content/smyrna-sm.png";
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                timber.penny.src = "https://admiralarmada.com/cookie/content/smyrna-sm.png";
             } else {
                 timber.penny.src = "https://admiralarmada.com/cookie/content/smyrna.png";
             }
@@ -111,23 +116,39 @@
             return
         }
         timber.checkForLoggedOut = function checkForLoggedOut() {
-            window.sessionStorage.setItem('activeSubSession','0');
+            window.sessionStorage.setItem('activeSubSession', '0');
             console.log("The visitor has logged out");
             document.cookie = "_tbn=0; expires=" + timber.utcString + "; path=/";
+            document.cookie = "_plan=none; expires=" + timber.utcString + "; path=/";
             parent.location.reload();
         }
-        timber.textLoginBtn.addEventListener('click',()=>{
-            window.admiral('show','transact.login');
+        timber.checkforPremium = function checkForPremium() {
+            if (timber.readCookie("_plan") === "premium") {
+                console.log("Premium User");
+                timber.status.textContent = "Premium Subscriber";
+                return;
+            }
+        }
+        timber.textLoginBtn.addEventListener('click', () => {
+            window.admiral('show', 'transact.login');
         })
         window.onload = timber.checkSubscriberCookie('_tbn');
         window.onload = timber.setCookie();
+        window.onload = timber.checkforPremium();
         //https://admrl.slack.com/archives/DG5CGLLGH/p1611685727001800
-        window.admiral('after','transact.loggedIn',timber.checkForLoggedIn);
-        window.admiral('after','transact.loggedOut',timber.checkForLoggedOut);
-        window.admiral('after','transact.subscribed',function() {
+        window.admiral('after', 'transact.loggedIn', timber.checkForLoggedIn);
+        window.admiral('after', 'transact.loggedOut', timber.checkForLoggedOut);
+        window.admiral('after', 'transact.subscribed', function (x) {
             document.cookie = "_tbn=1; expires=" + timber.utcString + "; path=/";
             document.cookie = "_pas=1; expires=" + timber.utcString + "; path=/";
+            x.offers.forEach(z => {
+                console.log(z);
+                if (z.offerID === "6010dabe5c443b08b53bef58") {
+                    document.cookie = "_plan=premium; expires=" + timber.utcString + ";path=/";
+                }
+            })
         })
     </script>
 </body>
+
 </html>

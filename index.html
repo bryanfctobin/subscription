@@ -18,10 +18,10 @@
     <!-- MVP CSS -->
     <link rel="stylesheet" href="https://unpkg.com/mvp.css">
     <!-- Local Stylesheet -->
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="./styles/main.css">
     <script
         type="text/javascript">!(function (o, n, t) { t = o.createElement(n), o = o.getElementsByTagName(n)[0], t.async = 1, t.src = "https://suddensoda.com/v2hguzJ1Tb73qw4v276K6w6fa_TWV1R7GgMRcXn_tfH3oCONgC_cufq-_iSo9PwBR3cXzUg0j6HpXGzHVJmJ9uQ", o.parentNode.insertBefore(t, o) })(document, "script"), (function (o, n) { o[n] = o[n] || function () { (o[n].q = o[n].q || []).push(arguments) } })(window, "admiral"); !(function (c, e, o, t, n) { function r(o, t) { (function n() { try { return 0 < (localStorage.getItem("v4ac1eiZr0") || "").split(",")[4] } catch (o) { } return !1 })() && (t = c[e].pubads()) && t.setTargeting("admiral-engaged", "true") } (n = c[e] = c[e] || {}).cmd = n.cmd || [], typeof n.pubads === o ? r() : typeof n.cmd.unshift === o ? n.cmd.unshift(r) : n.cmd.push(r) })(window, "googletag", "function");</script>
-    <script src="notibry.js"></script>
+    <script src="./js/notibry.js"></script>
 </head>
 
 <body>
@@ -44,111 +44,7 @@
             <div class="text-center" id="status"></div>
         </h1>
     </main>
-    <script>
-        var timber = {};
-        timber.status = document.querySelector('#status');
-        timber.loginBtn = document.querySelector('#loginBtn');
-        timber.textLoginBtn = document.querySelector('#textLoginBtn');
-        timber.date = new Date();
-        timber.date.setTime(timber.date.getTime() + (7 * 24 * 60 * 60 * 1000));
-        timber.utcString = timber.date.toUTCString();
-        timber.smyrna = document.querySelector('#smyrna');
-        timber.penny = document.createElement('img');
-        timber.readCookie = function readCookie(c) {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var keyvalues = cookies[i].split('=');
-                var key = keyvalues[0].trim();
-                if (c === key) {
-                    value = keyvalues[1].trim();
-                    return value;
-                }
-            }
-        }
-        timber.checkSubscriberCookie = function checkSubscriberCookie(c) {
-            if (timber.readCookie(c) === "1") {
-                timber.setSubscriberVersionSite(timber);
-                timber.removeSmyrna();
-                return;
-            }
-            timber.loadSmyrna();
-            timber.setNonSubscriberVersionSite(timber);
-        }
-        timber.setNonSubscriberVersionSite = function setNonSubscriberVersionSite(x) {
-            timber.loginBtn.textContent = "Subscribe";
-            timber.loginBtn.onclick = () => window.admiral('show', 'transact.subscribe');
-            timber.status.textContent = "No Active Subscription";
-        }
-        timber.setSubscriberVersionSite = function setSubscriberVersionSite(x) {
-            x.status.textContent = "Subscribed Visitor";
-            x.loginBtn.textContent = "Manage Account";
-            x.loginBtn.onclick = () => { window.admiral('show', 'transact.manage') };
-            x.textLoginBtn.style.display = 'none';
-        }
-        timber.setCookie = function setCookie() {
-            window.admiral('after', 'measure.detected', function (e) {
-                if (e.subscribed) {
-                    document.cookie = "_tbn=1; expires=" + timber.utcString + "; path=/";
-                    window.sessionStorage.setItem('activeSubSession', '1');
-                    console.log("Subscribed User");
-                    return;
-                }
-                console.log("Non Subscribed User");
-                document.cookie = "_tbn=0; expires=" + timber.utcString + "; path=/";
-                document.cookie = "_pas=1; expires=" + timber.utcString + "; path=/";
-                document.cookie = "_plan=none; expires=" + timber.utcString + "; path=/";
-                window.sessionStorage.setItem('activeSubSession', '0');
-            })
-        }
-        timber.loadSmyrna = function loadSmyrna() {
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                timber.penny.src = "https://admiralarmada.com/cookie/content/smyrna-sm.png";
-            } else {
-                timber.penny.src = "https://admiralarmada.com/cookie/content/smyrna.png";
-            }
-            timber.smyrna.appendChild(timber.penny);
-        }
-        timber.removeSmyrna = function removeSmyrna() {
-            timber.smyrna.style.display = 'none';
-        }
-        timber.checkForLoggedIn = function checkForLoggedIn() {
-            console.log("The visitor has logged in");
-            return
-        }
-        timber.checkForLoggedOut = function checkForLoggedOut() {
-            window.sessionStorage.setItem('activeSubSession', '0');
-            console.log("The visitor has logged out");
-            document.cookie = "_tbn=0; expires=" + timber.utcString + "; path=/";
-            document.cookie = "_plan=none; expires=" + timber.utcString + "; path=/";
-            parent.location.reload();
-        }
-        timber.checkforPremium = function checkForPremium() {
-            if (timber.readCookie("_plan") === "premium") {
-                console.log("Premium User");
-                timber.status.textContent = "Premium Subscriber";
-                return;
-            }
-        }
-        timber.textLoginBtn.addEventListener('click', () => {
-            window.admiral('show', 'transact.login');
-        })
-        window.onload = timber.checkSubscriberCookie('_tbn');
-        window.onload = timber.setCookie();
-        window.onload = timber.checkforPremium();
-        //https://admrl.slack.com/archives/DG5CGLLGH/p1611685727001800
-        window.admiral('after', 'transact.loggedIn', timber.checkForLoggedIn);
-        window.admiral('after', 'transact.loggedOut', timber.checkForLoggedOut);
-        window.admiral('after', 'transact.subscribed', function (x) {
-            document.cookie = "_tbn=1; expires=" + timber.utcString + "; path=/";
-            document.cookie = "_pas=1; expires=" + timber.utcString + "; path=/";
-            x.offers.forEach(z => {
-                console.log(z);
-                if (z.offerID === "6010dabe5c443b08b53bef58") {
-                    document.cookie = "_plan=premium; expires=" + timber.utcString + ";path=/";
-                }
-            })
-        })
-    </script>
+    <script src="./js/timber.js"></script>
 </body>
 
 </html>

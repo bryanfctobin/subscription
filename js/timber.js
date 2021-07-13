@@ -10,18 +10,18 @@ var timber = {
     smyrna: document.querySelector("#smyrna"),
     penny: document.createElement('img')
 }
+var offersObject = {
+
+}
 window.admiral('addEventListener','transact.subscribed',writeSubscriberCookie)
 window.admiral('addEventListener','measure.detected',checkForActiveSubscription);
 window.admiral('addEventListener','transact.loggedOut',handleLogout);
 function writeSubscriberCookie(subscriptions) {
-    console.log(subscriptions);
+    document.cookie = "_tbn=1; expires" + timber.utcString + ";path=/";
     subscriptions.offers.forEach((offer) => {
         console.log(offer);
         if (offer.offerID === "5e1e38e4bb23620733c1e544" && !offer.addon) {
             document.cookie = "_tbn=2; expires" + timber.utcString + ";path=/";
-            return;
-        } else {
-            document.cookie = "_tbn=1; expires" + timber.utcString + ";path=/";
         }
     })
 }
@@ -65,7 +65,7 @@ function setupSite() {
     console.log("Non Subscriber");
     loadAds();
     timber.loginBtn.textContent = "Subscribe";
-    timber.loginBtn.onclick = () => window.admiral('show','transact.subscribe');
+    timber.loginBtn.onclick = () => window.admiral('show','transact.subscribe',{offerID:'5e1e38e4bb23620733c1e544'});
     timber.status.textContent = "No Active Subscription";
     timber.textLoginBtn.onclick = () => window.admiral('show','transact.login');
 }

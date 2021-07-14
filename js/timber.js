@@ -13,6 +13,7 @@ var timber = {
 window.admiral('addEventListener','transact.subscribed',writeSubscriberCookie)
 window.admiral('addEventListener','measure.detected',checkForActiveSubscription);
 window.admiral('addEventListener','transact.loggedOut',handleLogout);
+window.admiral('addEventListener','transact.loggedIn',handleLogin);
 function writeSubscriberCookie(subscriptions) {
     document.cookie = "_tbn=1; expires" + timber.utcString + ";path=/";
     subscriptions.offers.forEach((offer) => {
@@ -73,6 +74,10 @@ function removeAds() {
 }
 function handleLogout() {
     document.cookie = "_tbn=0; expires=" + timber.utcString + ";path=/";
+    document.cookie = "_oak=0; expires=" + timber.utcString + ";path=/";
     parent.location.reload();
+}
+function handleLogin() {
+    document.cookie = "_oak=1; expires=" + timber.utcString + ";path=/";
 }
 window.onload = setupSite();

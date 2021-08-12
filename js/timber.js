@@ -15,6 +15,7 @@ window.admiral('addEventListener','measure.detected',checkForActiveSubscription)
 window.admiral('addEventListener','transact.loggedOut',handleLogout);
 window.admiral('addEventListener','transact.loggedIn',handleLogin);
 function writeSubscriberCookie(subscriptions) {
+    localStorage.setItem('subscriptions', JSON.stringify(subscriptions));
     document.cookie = "_tbn=1; expires" + timber.utcString + ";path=/";
     subscriptions.offers.forEach((offer) => {
         if (offer.offerID === "5e1e38e4bb23620733c1e544" && !offer.addon) {
@@ -39,6 +40,7 @@ function readCookie(cookie) {
     }
 }
 function setupSite() {
+    checkLocalStorageForSubscriptions('subscriptions');
     var cValue = readCookie('_tbn');
     if (cValue === "2") {
         removeAds();
@@ -79,5 +81,19 @@ function handleLogout() {
 }
 function handleLogin() {
     document.cookie = "_oak=1; expires=" + timber.utcString + ";path=/";
+}
+//Check Local Storage for subscriptons item and then loop through to see if email offer is accepted. If so, do something
+function checkLocalStorageForSubscriptions(item) {
+    let s = localStorage.getItem(item);
+    if (!s) {
+        console.log("No subscriptions are in local storage");
+        return;
+    }
+    s = JSON.parse(s)
+    s.offers.forEach(o=>{
+        if (o.offerType === "email") {
+            document.cookie = "_offerType=email; expires" + timber.utcString + ";/path=/";
+        }
+    })
 }
 window.onload = setupSite();

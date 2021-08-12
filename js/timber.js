@@ -16,16 +16,16 @@ window.admiral('addEventListener','transact.loggedOut',handleLogout);
 window.admiral('addEventListener','transact.loggedIn',handleLogin);
 function writeSubscriberCookie(subscriptions) {
     localStorage.setItem('subscriptions', JSON.stringify(subscriptions));
-    document.cookie = "_tbn=1; expires" + timber.utcString + ";path=/";
+    document.cookie = "_tbn=1; expires=" + timber.expiration() + ";path=/";
     subscriptions.offers.forEach((offer) => {
         if (offer.offerID === "5e1e38e4bb23620733c1e544" && !offer.addon) {
-            document.cookie = "_tbn=2; expires" + timber.utcString + ";path=/";
+            document.cookie = "_tbn=2; expires=" + timber.expiration() + ";path=/";
         }
     })
 }
 function checkForActiveSubscription(data) {
     if (!data.subscribed) {
-        document.cookie = "_tbn=0; expires=" + timber.utcString + ";path=/";
+        document.cookie = "_tbn=0; expires=" + timber.expiration() + ";path=/";
     }
 }
 function readCookie(cookie) {
@@ -75,12 +75,14 @@ function removeAds() {
     timber.smyrna.style.display = 'none';
 }
 function handleLogout() {
-    document.cookie = "_tbn=0; expires=" + timber.utcString + ";path=/";
-    document.cookie = "_oak=0; expires=" + timber.utcString + ";path=/";
+    document.cookie = "_tbn=0; expires=0;path=/";
+    document.cookie = "_oak=0; expires=0;path=/";
+    document.cookie = "_offerType=;expires=0;path=/";
+    localStorage.clear();
     parent.location.reload();
 }
 function handleLogin() {
-    document.cookie = "_oak=1; expires=" + timber.utcString + ";path=/";
+    document.cookie = "_oak=1; expires=" + timber.expiration() + ";path=/";
 }
 //Check Local Storage for subscriptons item and then loop through to see if email offer is accepted. If so, do something
 function checkLocalStorageForSubscriptions(item) {
@@ -90,9 +92,10 @@ function checkLocalStorageForSubscriptions(item) {
         return;
     }
     s = JSON.parse(s)
+    console.log(s);
     s.offers.forEach(o=>{
-        if (o.offerType === "email") {
-            document.cookie = "_offerType=email; expires" + timber.utcString + ";/path=/";
+        if (!o.addOn) {
+            document.cookie = "_offerType=" + o.offerType + ";expires=" + timber.expiration() + ";/path=/";
         }
     })
 }

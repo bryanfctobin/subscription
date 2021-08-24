@@ -1,8 +1,10 @@
 #smyrna {
-    margin-bottom: 15px;
-  }
-  #notificationsBtn {
-    cursor: pointer;
-    display: none;
-  }
-  
+  margin-bottom: 15px;
+}
+#notificationsBtn {
+  cursor: pointer;
+  display: none;
+}
+#status {
+  display: flow-root;
+}

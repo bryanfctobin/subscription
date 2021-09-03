@@ -44,7 +44,7 @@ function setupSite() {
     var cValue = readCookie('_tbn');
     if (cValue === "2") {
         removeAds();
-        handlePremiumFeatures('#premiumFeature');
+        handlePremiumFeatures('.premiumFeature');
         timber.status.textContent = "Premium Subscriber";
         timber.loginBtn.textContent = "Manage Account";
         timber.loginBtn.onclick = () => window.admiral('show','transact.manage');
@@ -52,7 +52,7 @@ function setupSite() {
         return;
     } else if (cValue === "1") {
         removeAds();
-        handlePremiumFeatures('#premiumFeature');
+        handlePremiumFeatures('.premiumFeature');
         timber.status.textContent = "Subscribed Visitor";
         timber.loginBtn.textContent = "Manage Account";
         timber.loginBtn.onclick = () => window.admiral('show','transact.manage');
@@ -60,7 +60,7 @@ function setupSite() {
         return;
     }
     loadAds();
-    preventPremiumFeatures('#premiumFeature');
+    preventPremiumFeatures('.premiumFeature');
     timber.loginBtn.textContent = "Subscribe";
     timber.loginBtn.onclick = () => window.admiral('show','transact.subscribe',{offerID:'5e1e38e4bb23620733c1e544'});
     timber.status.textContent = "No Active Subscription";
@@ -104,20 +104,19 @@ function checkLocalStorageForSubscriptions(item) {
 }
 //This uses the force method of our API to display an Engage for non-subscribers and provides the expected behavior for subscribers
 function handlePremiumFeatures(x) {
-    let f = document.querySelector(x);
-    f.addEventListener('click',function() {
+    let f = document.querySelectorAll(x);
+    f.forEach(h=>{
+        h.addEventListener('click',function() {
         alert("This alert only works for subscribers");
-    })
+    })})
     return f;
 }
 function preventPremiumFeatures(x) {
-    let g = document.querySelector(x);
-    g.addEventListener('click', function() {
-        if (!window.admiral) {
-            console.log("Check site for Admiral tag");
-            return;
-        }
-        window.admiral('targeting','force',{candidateIDs:['611d3769d653c12094369623','611d3769d653c12094369626']})
+    let g = document.querySelectorAll(x);
+    g.forEach(n=>{
+        n.addEventListener('click', function() {
+            window.admiral('targeting','force',{candidateIDs:['611d3769d653c12094369623','611d3769d653c12094369626']})
+        })
     })
 }
 window.onload = setupSite();

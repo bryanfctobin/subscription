@@ -17,6 +17,7 @@ window.admiral('addEventListener','transact.loggedIn',handleLogin);
 function writeSubscriberCookie(subscriptions) {
     localStorage.setItem('subscriptions', JSON.stringify(subscriptions));
     document.cookie = "_tbn=1; expires=" + timber.expiration() + ";path=/";
+    document.cookie = "transact=fired; expires=" + timber.expiration() + ";path=/";
     subscriptions.offers.forEach((offer) => {
         if (offer.offerID === "5e1e38e4bb23620733c1e544" && !offer.addon) {
             document.cookie = "_tbn=2; expires=" + timber.expiration() + ";path=/";

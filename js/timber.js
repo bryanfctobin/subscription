@@ -8,7 +8,8 @@ var timber = {
         return now.toUTCString();
     },
     smyrna: document.querySelector("#smyrna"),
-    penny: document.createElement('img')
+    penny: document.createElement('img'),
+    oakley: document.querySelector('iframe[src="https://player.vimeo.com/video/357076839?h=3c8c3bfc87"]')
 }
 window.admiral('addEventListener','transact.subscribed',writeSubscriberCookie)
 window.admiral('addEventListener','measure.detected',checkForActiveSubscription);
@@ -105,6 +106,8 @@ function checkLocalStorageForSubscriptions(item) {
 }
 //This uses the force method of our API to display an Engage for non-subscribers and provides the expected behavior for subscribers
 function handlePremiumFeatures(x) {
+    document.getElementById("vimeo-attribution").style.display = "block";
+    timber.oakley.style.display = "inline";
     let f = document.querySelectorAll(x);
     f.forEach(h=>{
         h.addEventListener('click',function() {
@@ -113,6 +116,8 @@ function handlePremiumFeatures(x) {
     return f;
 }
 function preventPremiumFeatures(x) {
+    document.getElementById("vimeo-attribution").style.display = "none";
+    timber.oakley.style.display = "none";
     let g = document.querySelectorAll(x);
     g.forEach(n=>{
         n.addEventListener('click', function() {

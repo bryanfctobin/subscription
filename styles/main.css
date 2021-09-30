@@ -8,3 +8,6 @@
 #status {
   display: flow-root;
 }
+iframe[src="https://player.vimeo.com/video/357076839?h=3c8c3bfc87"], #vimeo-attribution {
+  display: none;
+}

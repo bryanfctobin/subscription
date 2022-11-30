@@ -115,7 +115,7 @@ function preventPremiumFeatures(x) {
     let g = document.querySelectorAll(x);
     g.forEach(n=>{
         n.addEventListener('click', function() {
-            window.admiral('targeting','force',{candidateIDs:['611d3769d653c12094369623','611d3769d653c12094369626']})
+            window.admiral('targeting','force',{candidateIDs:['6337d25ec028baee084759ab']})
         })
     })
 }
